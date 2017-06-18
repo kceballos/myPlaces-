@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GMaps, { Marker } from './taqsMap';
+import SidebarRightOverlay from './sidebar';
 
 export default class App extends Component {
 
@@ -26,8 +27,15 @@ export default class App extends Component {
   	}
 
     render() {
-        return <div>{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0"} center={this.state.pos}>
-            <Marker position={this.state.pos} animation="DROP" />
-        </GMaps> : null}</div>
+        return (
+        <div>
+        	<SidebarRightOverlay {...this.props}>
+				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0"} center={this.state.pos}>
+	            	<Marker position={this.state.pos} animation="DROP" />
+	        	</GMaps> : null}
+        	</SidebarRightOverlay>
+        
+        </div>
+        )
     }
 }
