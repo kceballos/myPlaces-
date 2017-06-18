@@ -7,7 +7,7 @@ export default class App extends Component {
 		super(props)
 
 		this.state = {
-			pos: {lat: 40.730610, lng: -73.935242 }
+			// pos: {lat: 40.730610, lng: -73.935242 }
 		}
 	}
 
@@ -26,8 +26,8 @@ export default class App extends Component {
   	}
 
     render() {
-        return <GMaps {...this.props} apiKey={"AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0"} center={this.state.pos}>
+        return <div>{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0"} center={this.state.pos}>
             <Marker position={this.state.pos} animation="DROP" />
-        </GMaps>;
+        </GMaps> : null}</div>
     }
 }

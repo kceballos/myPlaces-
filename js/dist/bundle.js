@@ -9645,7 +9645,7 @@ var App = function (_Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            pos: { lat: 40.730610, lng: -73.935242 }
+            // pos: {lat: 40.730610, lng: -73.935242 }
         };
         return _this;
     }
@@ -9669,9 +9669,13 @@ var App = function (_Component) {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                _taqsMap2.default,
-                _extends({}, this.props, { apiKey: "AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0", center: this.state.pos }),
-                _react2.default.createElement(_taqsMap.Marker, { position: this.state.pos, animation: 'DROP' })
+                'div',
+                null,
+                this.state.pos ? _react2.default.createElement(
+                    _taqsMap2.default,
+                    _extends({}, this.props, { apiKey: "AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0", center: this.state.pos }),
+                    _react2.default.createElement(_taqsMap.Marker, { position: this.state.pos, animation: 'DROP' })
+                ) : null
             );
         }
     }]);
