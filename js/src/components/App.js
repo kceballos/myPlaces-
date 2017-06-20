@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GMaps, { Marker } from './taqsMap';
 import SidebarRightOverlay from './sidebar';
+import InputExampleFluid from './Input';
 
 export default class App extends Component {
 
@@ -29,13 +30,16 @@ export default class App extends Component {
     render() {
         return (
         <div>
+        <div>
         	<SidebarRightOverlay {...this.props}>
-				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0"} center={this.state.pos}>
+				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>
 	            	<Marker position={this.state.pos} animation="DROP" />
 	        	</GMaps> : null}
         	</SidebarRightOverlay>
-        
+        </div>
         </div>
         )
     }
 }
+
+//AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0
