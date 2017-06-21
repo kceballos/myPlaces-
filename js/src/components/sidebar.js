@@ -5,7 +5,7 @@ var Places = require('google-places-browser/places')
 
 var autocomplete = Autocomplete(google)
 var places = Places(google)
-
+  console.log(places,"PLACES")
 class SidebarRightOverlay extends Component {
   state = { 
     visible: true,
@@ -24,13 +24,36 @@ class SidebarRightOverlay extends Component {
       radius: 3000   //in meters
     };
 
-    if(e.which === 13) autocomplete.query(options, function (err, results) {
-        this.setState({
-          places: results
+    if(e.which === 13) autocomplete.query(options, (err, results) => {
+        console.log(results)
+        const allResults = new Array(results.length);
+        results.forEach((result, index) => {
+          console.log("HERE", result)
+          if (!result.place_id) {
+            allResults[index] = result;
+            this.setState({
+              places: allResults,
+            });
+          }
+          else {
+            places.details({placeId: result.place_id}, (err, myplace) => {
+              allResults[index] = myplace;
+              this.setState({
+                places: allResults,
+              })
+            })
+          }
+
+
         })
-    }.bind(this))
+
+
+        // this.setState({
+        //   places: results
+        // })
+    })
  
-    // console.log(e.target.value)
+    // console.log(results,"results")
   }
 
   render() {
@@ -43,7 +66,7 @@ class SidebarRightOverlay extends Component {
           <Sidebar
             as={Menu}
             animation='overlay'
-            width='thin'
+            width='wide'
             direction='right'
             visible={visible}
             icon='labeled'

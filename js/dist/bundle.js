@@ -27209,6 +27209,7 @@ var Places = __webpack_require__(513);
 
 var autocomplete = Autocomplete(google);
 var places = Places(google);
+console.log(places, "PLACES");
 
 var SidebarRightOverlay = function (_Component) {
   _inherits(SidebarRightOverlay, _Component);
@@ -27239,12 +27240,32 @@ var SidebarRightOverlay = function (_Component) {
       };
 
       if (e.which === 13) autocomplete.query(options, function (err, results) {
-        this.setState({
-          places: results
-        });
-      }.bind(_this)
+        console.log(results);
+        var allResults = new Array(results.length);
+        results.forEach(function (result, index) {
+          console.log("HERE", result);
+          if (!result.place_id) {
+            allResults[index] = result;
+            _this.setState({
+              places: allResults
+            });
+          } else {
+            places.details({ placeId: result.place_id }, function (err, myplace) {
+              allResults[index] = myplace;
+              _this.setState({
+                places: allResults
+              });
+            });
+          }
+        }
 
-      // console.log(e.target.value)
+        // this.setState({
+        //   places: results
+        // })
+        );
+      }
+
+      // console.log(results,"results")
       );
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -27271,7 +27292,7 @@ var SidebarRightOverlay = function (_Component) {
             {
               as: _semanticUiReact.Menu,
               animation: 'overlay',
-              width: 'thin',
+              width: 'wide',
               direction: 'right',
               visible: visible,
               icon: 'labeled',
