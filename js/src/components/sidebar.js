@@ -7,16 +7,28 @@ var autocomplete = Autocomplete(google)
 var places = Places(google)
 
 class SidebarRightOverlay extends Component {
-  state = { visible: false }
+  state = { 
+    visible: true,
+    places: []
+  }
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
+
   
   search = (e) => {
-    if(e.which === 13) autocomplete.query({input: e.target.value}, function (err, results) {
-        results.map(result=>{
-          console.log(result.description)
+    let location = new google.maps.LatLng(this.props.location); 
+
+    let options = {
+      input: e.target.value, 
+      location,
+      radius: 3000   //in meters
+    };
+
+    if(e.which === 13) autocomplete.query(options, function (err, results) {
+        this.setState({
+          places: results
         })
-    })
+    }.bind(this))
  
     // console.log(e.target.value)
   }
@@ -25,8 +37,8 @@ class SidebarRightOverlay extends Component {
     const { visible } = this.state
     return (
       <div>
+        <Button onClick={this.tacos}>More Tacos</Button>
         <Input onKeyDown={this.search} className="semantic-input" fluid icon='search' placeholder='Search...' />
-        <Button onClick={this.toggleVisibility}>My Places</Button>
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
@@ -38,18 +50,12 @@ class SidebarRightOverlay extends Component {
             vertical
             inverted
           >
-            <Menu.Item name='home'>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item name='gamepad'>
-              <Icon name='gamepad' />
-              Games
-            </Menu.Item>
-            <Menu.Item name='camera'>
-              <Icon name='camera' />
-              Channels
-            </Menu.Item>
+            
+            {this.state.places.map((place, index)=>{
+              console.log('PLACE',place)
+              return <Menu.Item key={index} name={place.description}></Menu.Item>
+            })}
+            
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic>

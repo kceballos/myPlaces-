@@ -31,7 +31,7 @@ export default class App extends Component {
         return (
         <div>
         <div>
-        	<SidebarRightOverlay {...this.props}>
+        	<SidebarRightOverlay location={this.state.pos} {...this.props}>
 				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>
 	            	<Marker position={this.state.pos} animation="DROP" />
 	        	</GMaps> : null}

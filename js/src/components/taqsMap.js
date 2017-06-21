@@ -41,6 +41,7 @@ const loadGMapScript = (url, params) => {
 
 const loadMap = (domNode, options = {}) => new google.maps.Map(domNode, Object.assign({
 	zoom: 14,
+
 }, options));
 
 export default class GMaps extends Component {
@@ -65,7 +66,7 @@ export default class GMaps extends Component {
 
 	_loadMap() {
 		const {mapUrl} = this.state;
-		const {center, apiKey} = this.props;
+		const {center, apiKey, radius} = this.props;
 		loadGMapScript(mapUrl, {key: apiKey})
 			.then(_ => this.map = loadMap(this.refs.map, {
 				center,
