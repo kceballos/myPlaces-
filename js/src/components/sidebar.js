@@ -14,7 +14,6 @@ class SidebarRightOverlay extends Component {
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
-  
   search = (e) => {
     let location = new google.maps.LatLng(this.props.location); 
 
@@ -23,12 +22,12 @@ class SidebarRightOverlay extends Component {
       location,
       radius: 3000   //in meters
     };
-
     if(e.which === 13) autocomplete.query(options, (err, results) => {
         console.log(results)
         const allResults = new Array(results.length);
         results.forEach((result, index) => {
-          console.log("HERE", result)
+          console.log('result', result)
+          // console.log("HERE", result)
           if (!result.place_id) {
             allResults[index] = result;
             this.setState({
@@ -37,10 +36,15 @@ class SidebarRightOverlay extends Component {
           }
           else {
             places.details({placeId: result.place_id}, (err, myplace) => {
-              allResults[index] = myplace;
+              allResults[index] = Object.assign({}, myplace, {
+                lat: myplace.geometry.location.lat(), 
+                lng: myplace.geometry.location.lng()
+              });
+              console.log('myplace', myplace.geometry.location.lat(), myplace.geometry.location.lng())
               this.setState({
                 places: allResults,
               })
+
             })
           }
 
@@ -53,13 +57,14 @@ class SidebarRightOverlay extends Component {
         // })
     })
  
-    // console.log(results,"results")
-  }
+  }         
 
   render() {
-    const { visible } = this.state
+    const { visible, places } = this.state
+    console.log(this.state)
     return (
       <div>
+
         <Button onClick={this.tacos}>More Tacos</Button>
         <Input onKeyDown={this.search} className="semantic-input" fluid icon='search' placeholder='Search...' />
         <Sidebar.Pushable as={Segment}>
@@ -78,6 +83,7 @@ class SidebarRightOverlay extends Component {
               if (index === 0) {
                 return null;
               }
+              // console.log(place)
               // console.log('PLACE',place.photos[0].getUrl({
               //   maxWidth: 200,
               //   maxHeight: 200,
@@ -86,11 +92,12 @@ class SidebarRightOverlay extends Component {
                 maxWidth: 200,
                 maxHeight: 200,
               });
-              return <Menu.Item key={index} name={place.description}>
-              <img src={url}/>
-              </Menu.Item>
+              return  <Menu.Item onClick={()=>this.props.handlePlaceClick(place)} key={index}>
+                        <img className="picture" src={url} />
+                        <p> {place.formatted_address}</p>
+                      </Menu.Item>
             })}
-            
+
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic>

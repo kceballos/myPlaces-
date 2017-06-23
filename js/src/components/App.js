@@ -27,15 +27,31 @@ export default class App extends Component {
       }
   	}
 
+    handlePlaceClick(place){
+      console.log('in here')
+      this.setState({
+        pos: {
+          lat: place.lat,
+          lng: place.lng,
+        },
+
+      })
+    }
+
+
     render() {
+        console.log('APP STATE', this.state)
         return (
         <div>
         <div>
-        	<SidebarRightOverlay location={this.state.pos} {...this.props}>
+        	<SidebarRightOverlay handlePlaceClick={this.handlePlaceClick.bind(this)} location={this.state.pos} {...this.props}>
 				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>
 	            	<Marker position={this.state.pos} animation="DROP" />
 	        	</GMaps> : null}
         	</SidebarRightOverlay>
+        }
+      }
+
         </div>
         </div>
         )

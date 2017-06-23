@@ -124,6 +124,9 @@ export class Marker extends Component {
 	_loadMarker(props) {
 		const {position, map, animation} = props;
 		if (!map) return;
+		if (this.marker) {
+			this.marker.setMap(null)
+		}
 		this.marker = new google.maps.Marker({
             position,
             map,

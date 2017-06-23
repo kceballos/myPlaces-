@@ -27021,7 +27021,7 @@ exports.default = Main;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -27053,58 +27053,72 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var App = function (_Component) {
-    _inherits(App, _Component);
+  _inherits(App, _Component);
 
-    function App(props) {
-        _classCallCheck(this, App);
+  function App(props) {
+    _classCallCheck(this, App);
 
-        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this.state = {
-            // pos: {lat: 40.730610, lng: -73.935242 }
-        };
-        return _this;
-    }
+    _this.state = {
+      // pos: {lat: 40.730610, lng: -73.935242 }
+    };
+    return _this;
+  }
 
-    _createClass(App, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
+  _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
 
-                    this.setState({
-                        pos: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        }
-                    });
-                }.bind(this));
+          this.setState({
+            pos: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
             }
+          });
+        }.bind(this));
+      }
+    }
+  }, {
+    key: 'handlePlaceClick',
+    value: function handlePlaceClick(place) {
+      console.log('in here');
+      this.setState({
+        pos: {
+          lat: place.lat,
+          lng: place.lng
         }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        _sidebar2.default,
-                        _extends({ location: this.state.pos }, this.props),
-                        this.state.pos ? _react2.default.createElement(
-                            _taqsMap2.default,
-                            _extends({}, this.props, { apiKey: "AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg", center: this.state.pos }),
-                            _react2.default.createElement(_taqsMap.Marker, { position: this.state.pos, animation: 'DROP' })
-                        ) : null
-                    )
-                )
-            );
-        }
-    }]);
 
-    return App;
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log('APP STATE', this.state);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _sidebar2.default,
+            _extends({ handlePlaceClick: this.handlePlaceClick.bind(this), location: this.state.pos }, this.props),
+            this.state.pos ? _react2.default.createElement(
+              _taqsMap2.default,
+              _extends({}, this.props, { apiKey: "AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg", center: this.state.pos }),
+              _react2.default.createElement(_taqsMap.Marker, { position: this.state.pos, animation: 'DROP' })
+            ) : null
+          ),
+          '} }'
+        )
+      );
+    }
+  }]);
+
+  return App;
 }(_react.Component);
 
 //AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0
@@ -27238,20 +27252,24 @@ var SidebarRightOverlay = function (_Component) {
         location: location,
         radius: 3000 //in meters
       };
-
       if (e.which === 13) autocomplete.query(options, function (err, results) {
         console.log(results);
         var allResults = new Array(results.length);
         results.forEach(function (result, index) {
-          console.log("HERE", result);
-          if (!result.place_id) {
+          console.log('result', result
+          // console.log("HERE", result)
+          );if (!result.place_id) {
             allResults[index] = result;
             _this.setState({
               places: allResults
             });
           } else {
             places.details({ placeId: result.place_id }, function (err, myplace) {
-              allResults[index] = myplace;
+              allResults[index] = Object.assign({}, myplace, {
+                lat: myplace.geometry.location.lat(),
+                lng: myplace.geometry.location.lng()
+              });
+              console.log('myplace', myplace.geometry.location.lat(), myplace.geometry.location.lng());
               _this.setState({
                 places: allResults
               });
@@ -27263,18 +27281,20 @@ var SidebarRightOverlay = function (_Component) {
         //   places: results
         // })
         );
-      }
-
-      // console.log(results,"results")
-      );
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(SidebarRightOverlay, [{
     key: 'render',
     value: function render() {
-      var visible = this.state.visible;
+      var _this2 = this;
 
+      var _state = this.state,
+          visible = _state.visible,
+          places = _state.places;
+
+      console.log(this.state);
       return _react2.default.createElement(
         'div',
         null,
@@ -27303,6 +27323,7 @@ var SidebarRightOverlay = function (_Component) {
               if (index === 0) {
                 return null;
               }
+              // console.log(place)
               // console.log('PLACE',place.photos[0].getUrl({
               //   maxWidth: 200,
               //   maxHeight: 200,
@@ -27313,8 +27334,16 @@ var SidebarRightOverlay = function (_Component) {
               });
               return _react2.default.createElement(
                 _semanticUiReact.Menu.Item,
-                { key: index, name: place.description },
-                _react2.default.createElement('img', { src: url })
+                { onClick: function onClick() {
+                    return _this2.props.handlePlaceClick(place);
+                  }, key: index },
+                _react2.default.createElement('img', { className: 'picture', src: url }),
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  ' ',
+                  place.formatted_address
+                )
               );
             })
           ),
@@ -27568,6 +27597,9 @@ var Marker = exports.Marker = function (_Component2) {
 			    animation = props.animation;
 
 			if (!map) return;
+			if (this.marker) {
+				this.marker.setMap(null);
+			}
 			this.marker = new google.maps.Marker({
 				position: position,
 				map: map,
