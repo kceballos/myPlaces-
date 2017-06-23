@@ -27300,8 +27300,22 @@ var SidebarRightOverlay = function (_Component) {
               inverted: true
             },
             this.state.places.map(function (place, index) {
-              console.log('PLACE', place);
-              return _react2.default.createElement(_semanticUiReact.Menu.Item, { key: index, name: place.description });
+              if (index === 0) {
+                return null;
+              }
+              // console.log('PLACE',place.photos[0].getUrl({
+              //   maxWidth: 200,
+              //   maxHeight: 200,
+              // }))
+              var url = place.photos[0].getUrl({
+                maxWidth: 200,
+                maxHeight: 200
+              });
+              return _react2.default.createElement(
+                _semanticUiReact.Menu.Item,
+                { key: index, name: place.description },
+                _react2.default.createElement('img', { src: url })
+              );
             })
           ),
           _react2.default.createElement(

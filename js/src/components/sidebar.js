@@ -75,8 +75,20 @@ class SidebarRightOverlay extends Component {
           >
             
             {this.state.places.map((place, index)=>{
-              console.log('PLACE',place)
-              return <Menu.Item key={index} name={place.description}></Menu.Item>
+              if (index === 0) {
+                return null;
+              }
+              // console.log('PLACE',place.photos[0].getUrl({
+              //   maxWidth: 200,
+              //   maxHeight: 200,
+              // }))
+              const url = place.photos[0].getUrl({
+                maxWidth: 200,
+                maxHeight: 200,
+              });
+              return <Menu.Item key={index} name={place.description}>
+              <img src={url}/>
+              </Menu.Item>
             })}
             
           </Sidebar>
