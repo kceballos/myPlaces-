@@ -18,6 +18,11 @@
 	margin: 0 auto !important;	
 }
 
+.pictures {
+	width: 150px;
+	height: 100px;
+}
 
-
-
+/*.item {
+	height: 150px;
+}*/
