@@ -30499,6 +30499,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import actions from '../actions'
 
+var style = {
+  marginTop: '-10px',
+  fontFamily: 'helvetica'
+};
+
+var style2 = {
+  paddingLeft: '25px',
+  fontFamily: 'helvetica'
+};
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -30572,11 +30581,21 @@ var App = function (_Component) {
           'div',
           null,
           PLACES.map(function (place) {
-            console.log(place);
+            // console.log(place)
             return _react2.default.createElement(
-              'h3',
-              null,
-              place.name
+              'div',
+              { style: style2, className: 'places_saved' },
+              _react2.default.createElement(
+                'h3',
+                null,
+                place.name
+              ),
+              _react2.default.createElement(
+                'h4',
+                { style: style },
+                place.formatted_address
+              ),
+              _react2.default.createElement('br', null)
             );
           })
         )

@@ -4,6 +4,15 @@ import SidebarRightOverlay from './sidebar';
 import InputExampleFluid from './Input';
 // import actions from '../actions'
 
+const style = {
+  marginTop: '-10px',
+  fontFamily: 'helvetica',
+}
+
+const style2 = {
+  paddingLeft: '25px',
+  fontFamily: 'helvetica',
+}
 
 export default class App extends Component {
 
@@ -44,6 +53,7 @@ export default class App extends Component {
     }
 
 
+
   render() {
       // console.log('APP PROPS', this.props);
       const PLACES = Object.values(this.props.PLACES || []);
@@ -60,8 +70,13 @@ export default class App extends Component {
         </div>
         <div>
           {PLACES.map(place => {
-            console.log(place)
-            return <h3>{place.name}</h3>
+            // console.log(place)
+            return <div style={style2} className="places_saved">
+                   <h3>{place.name}</h3>
+                   <h4 style={style}>{place.formatted_address}</h4>
+                   <br />
+                   </div>
+                       
           })}
         </div>
       
