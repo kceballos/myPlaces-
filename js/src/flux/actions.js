@@ -1,10 +1,7 @@
-// import { currentUser } from './reducers';
 
-// export const actions = {
-// 	'CURRENT_USER': (oldStore, options) => currentUser(oldStore, options),
-// }
-import { getSearchQuery } from './reducers';
+import { savePlaces, loadPlaces } from './reducers';
 
 export const actions = {
-	'SEARCH_QUERY': (oldStore, options) => getSearchQuery(oldStore, options),
+	'SAVE_PLACES': (oldStore, options) => savePlaces(oldStore, options),
+	'LOAD_PLACES': (oldStore, options) => loadPlaces(oldStore, options),
 }

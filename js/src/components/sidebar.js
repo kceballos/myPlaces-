@@ -61,7 +61,7 @@ class SidebarRightOverlay extends Component {
 
   render() {
     const { visible, places } = this.state
-    console.log(this.state)
+    // console.log("SIDEBAR",this.state)
     return (
       <div>
         <Input onKeyDown={this.search} className="semantic-input" fluid icon='search' placeholder='Search...' />

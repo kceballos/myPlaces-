@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+// import {init} from '../firebase'
 import App from '../components/App';
 
 import { 
@@ -9,6 +9,9 @@ import {
 import {
     Store
 } from './store';
+
+
+// const firebase = init()
 
 export default class Main extends Component {
     state = Store
@@ -23,6 +26,7 @@ export default class Main extends Component {
 	render() {
 		const sharedProps = {
 			dispatch: (...args) => this.dispatch(...args),
+			
 		};
 
         return <App {...this.state} {...sharedProps} /> 

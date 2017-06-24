@@ -1,39 +1,40 @@
 import firebase from 'firebase';
 
 // Initialize Firebase
-const config = {
-  apiKey: "AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0",
-  authDomain: "my-favorite-places-1358e.firebaseapp.com",
-  databaseURL: "https://my-favorite-places-1358e.firebaseio.com",
-  projectId: "my-favorite-places-1358e",
-  storageBucket: "my-favorite-places-1358e.appspot.com",
-  messagingSenderId: "779311464792"
+export const init =()=>{
+  const config = {
+    apiKey: "AIzaSyAdHdePExLrWT5do9Y1bdQ72HIlSWpCOG0",
+    authDomain: "my-favorite-places-1358e.firebaseapp.com",
+    databaseURL: "https://my-favorite-places-1358e.firebaseio.com",
+    projectId: "my-favorite-places-1358e",
+    storageBucket: "my-favorite-places-1358e.appspot.com",
+    messagingSenderId: "779311464792"
   };
   firebase.initializeApp(config);
 
-// const app = firebase.initializeApp(config); 
+  // const app = firebase.initializeApp(config); 
 
-const database = firebase.database();
-
-function createNewUser(name, email, username) {
-  // const newUserRef = database.ref('users').push();
-  // const newUserKey = newUserRef.key;
-
-  database.ref('users').push({
-    // userID: newUserKey,
-    name: 'Kirsi',
-    email: 'abc@gmail.com',
-    username: 'hey'
-  });
+  const database = firebase.database();
+  return firebase
 }
 
-const provider = new firebase.auth.GoogleAuthProvider();
+// function createNewUser(name, email, username) {
+//   // const newUserRef = database.ref('users').push();
+//   // const newUserKey = newUserRef.key;
 
-const signinBtn = document.querySelector('.google_signin');
-console.log(signinBtn)
-if(signinBtn !== null) {
-  signinBtn.addEventListener('click', (e) => {
-      e.preventDefault();
+//   database.ref('users').push({
+//     // userID: newUserKey,
+//     name: 'Kirsi',
+//     email: 'abc@gmail.com',
+//     username: 'hey'
+//   });
+// }
+
+
+
+export const signIn =()=> {
+  
+      const provider = new firebase.auth().GoogleAuthProvider();
       //start signin()
       
       firebase.auth()
@@ -52,7 +53,6 @@ if(signinBtn !== null) {
    //end signin()
       
    
-       });
    }
 
 

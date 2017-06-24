@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GMaps, { Marker } from './taqsMap';
 import SidebarRightOverlay from './sidebar';
 import InputExampleFluid from './Input';
+// import actions from '../actions'
+
 
 export default class App extends Component {
 
@@ -10,25 +12,28 @@ export default class App extends Component {
 
 		this.state = {
 			// pos: {lat: 40.730610, lng: -73.935242 }
+      userplaces: []
 		}
 	}
 
 	componentDidMount(){
+    this.props.dispatch('LOAD_PLACES')
+
 		if (navigator.geolocation) {
           	navigator.geolocation.getCurrentPosition(function(position) {
-          
         	this.setState({
         		pos: {
-              		lat: position.coords.latitude,
-              		lng: position.coords.longitude
+              	lat: position.coords.latitude,
+              	lng: position.coords.longitude
             	}
         	})
 		}.bind(this))
       }
   	}
 
-    handlePlaceClick(place){
-      console.log('in here')
+    handlePlaceClick(place){ 
+      console.log(place)
+      this.props.dispatch('SAVE_PLACES', {place})
       this.setState({
         pos: {
           lat: place.lat,
@@ -40,9 +45,13 @@ export default class App extends Component {
 
 
     render() {
-        console.log('APP STATE', this.state)
+        // console.log('APP PROPS', this.props);
+        const PLACES = Object.values(this.props.PLACES || {a:0});
+        console.log(PLACES)
+
         return (
         <div>
+
         <div>
         	<SidebarRightOverlay handlePlaceClick={this.handlePlaceClick.bind(this)} location={this.state.pos} {...this.props}>
 				{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>

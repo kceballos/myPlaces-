@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Input } from 'semantic-ui-react'
+// import { Input } from 'semantic-ui-react'
 
 const InputExampleFluid = () => {
 	 return <Input fluid icon='search' placeholder='Search...' />
