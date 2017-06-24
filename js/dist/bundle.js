@@ -27298,11 +27298,6 @@ var SidebarRightOverlay = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          _semanticUiReact.Button,
-          { onClick: this.tacos },
-          'More Tacos'
-        ),
         _react2.default.createElement(_semanticUiReact.Input, { onKeyDown: this.search, className: 'semantic-input', fluid: true, icon: 'search', placeholder: 'Search...' }),
         _react2.default.createElement(
           _semanticUiReact.Sidebar.Pushable,
@@ -27337,12 +27332,16 @@ var SidebarRightOverlay = function (_Component) {
                 { onClick: function onClick() {
                     return _this2.props.handlePlaceClick(place);
                   }, key: index },
-                _react2.default.createElement('img', { className: 'picture', src: url }),
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  ' ',
-                  place.formatted_address
+                  'div',
+                  { className: 'photos' },
+                  _react2.default.createElement('img', { className: 'picture', src: url }),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    ' ',
+                    place.formatted_address
+                  )
                 )
               );
             })
@@ -27448,7 +27447,7 @@ var loadGMapScript = function loadGMapScript(url, params) {
 var loadMap = function loadMap(domNode) {
 	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	return new google.maps.Map(domNode, Object.assign({
-		zoom: 14
+		zoom: 16
 
 	}, options));
 };
@@ -27487,14 +27486,13 @@ var GMaps = function (_Component) {
 
 	_createClass(GMaps, [{
 		key: '_loadMap',
-		value: function _loadMap() {
+		value: function _loadMap(props) {
 			var _this2 = this;
 
 			var mapUrl = this.state.mapUrl;
-			var _props = this.props,
-			    center = _props.center,
-			    apiKey = _props.apiKey,
-			    radius = _props.radius;
+			var center = props.center,
+			    apiKey = props.apiKey,
+			    radius = props.radius;
 
 			loadGMapScript(mapUrl, { key: apiKey }).then(function (_) {
 				return _this2.map = loadMap(_this2.refs.map, {
@@ -27528,8 +27526,16 @@ var GMaps = function (_Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this._loadMap();
+			this._loadMap(this.props);
 			this._initShimLogic();
+		}
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			// this._loadMap(nextProps)
+			if (nextProps.center.lat !== this.props.center.lat) {
+				this.map.setCenter(nextProps.center);
+			}
 		}
 	}, {
 		key: 'render',

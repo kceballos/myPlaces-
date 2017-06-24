@@ -64,8 +64,6 @@ class SidebarRightOverlay extends Component {
     console.log(this.state)
     return (
       <div>
-
-        <Button onClick={this.tacos}>More Tacos</Button>
         <Input onKeyDown={this.search} className="semantic-input" fluid icon='search' placeholder='Search...' />
         <Sidebar.Pushable as={Segment}>
           <Sidebar
@@ -93,8 +91,8 @@ class SidebarRightOverlay extends Component {
                 maxHeight: 200,
               });
               return  <Menu.Item onClick={()=>this.props.handlePlaceClick(place)} key={index}>
-                        <img className="picture" src={url} />
-                        <p> {place.formatted_address}</p>
+                        <div className="photos"><img className="picture" src={url} />
+                        <p> {place.formatted_address}</p></div>
                       </Menu.Item>
             })}
 

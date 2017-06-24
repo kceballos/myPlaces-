@@ -40,7 +40,7 @@ const loadGMapScript = (url, params) => {
 }
 
 const loadMap = (domNode, options = {}) => new google.maps.Map(domNode, Object.assign({
-	zoom: 14,
+	zoom: 16,
 
 }, options));
 
@@ -64,9 +64,9 @@ export default class GMaps extends Component {
         cursor: 'wait',
 	}
 
-	_loadMap() {
+	_loadMap(props) {
 		const {mapUrl} = this.state;
-		const {center, apiKey, radius} = this.props;
+		const {center, apiKey, radius} = props;
 		loadGMapScript(mapUrl, {key: apiKey})
 			.then(_ => this.map = loadMap(this.refs.map, {
 				center,
@@ -95,8 +95,14 @@ export default class GMaps extends Component {
 	}
 
 	componentDidMount() {
-		this._loadMap();
+		this._loadMap(this.props);
 		this._initShimLogic();
+	}
+	componentWillReceiveProps(nextProps) {
+		// this._loadMap(nextProps)
+		if (nextProps.center.lat !== this.props.center.lat) {
+			this.map.setCenter(nextProps.center)
+		}
 	}
 	render() {
 		const {_wrapStyle, _shimStyle} = this;
