@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GMaps, { Marker } from './taqsMap';
+import GMaps from './maps';
 import SidebarRightOverlay from './sidebar';
 import InputExampleFluid from './Input';
 // import actions from '../actions'
@@ -58,8 +58,8 @@ export default class App extends Component {
       // console.log('APP PROPS', this.props);
       const PLACES = Object.values(this.props.PLACES || []);
       console.log(PLACES)
-      const gmaps = <GMaps {...this.props} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>
-        <Marker position={this.state.pos} animation="DROP" />
+      const gmaps = <GMaps {...this.props} PLACES={PLACES} apiKey={"AIzaSyBACizJOC_KdP_vmNWSGsHprpJTRTQMfdg"} center={this.state.pos}>
+       
       </GMaps>
 
       return (<div>

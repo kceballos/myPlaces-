@@ -37,19 +37,28 @@ const styles = {
 	}
 }
 
+const STAR = () => <img 
+                      width={25} 
+                      height={25} 
+                      src={"http://site.consultai.com.br/app/%C3%ADcones/FAVORITOS%202.png"} 
+                      />;
+
 export default class Gmaps extends Component {
-  static defaultProps = {
-    center: {lat: 59.95, lng: 30.33},
+
+  defaultProps = {
+    center: this.props.center,
     zoom: 15
   };
 
   render() {
-  	console.log('GMAPS',this.props.type)
-  	const providers = this.props.data.serviceProviders[this.props.type] || [];
-  	console.log('here')
     return (
     	<div style={styles.container}>
-	      <GoogleMapReact defaultCenter={this.props.center} defaultZoom={this.props.zoom}>
+	      <GoogleMapReact defaultCenter={{lat: 40.730610, lng: -73.935242 }} center={this.props.center} defaultZoom={15} >
+          {this.props.PLACES.map(place=>{
+            return <STAR lat={place.lat} lng={place.lng}/>
+          })}
+        </GoogleMapReact>
+      </div>
     );
   }
 }

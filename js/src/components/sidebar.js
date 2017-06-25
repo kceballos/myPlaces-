@@ -20,7 +20,7 @@ search = (e) => {
   let options = {
     input: e.target.value, 
     location,
-    radius: 3000   //in meters
+    radius: 20000   //in meters
   };
   if(e.which === 13) autocomplete.query(options, (err, results) => {
       console.log(results)
